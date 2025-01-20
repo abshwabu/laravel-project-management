@@ -30,6 +30,28 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
+                                <NavLink
+                            href={route('project.index')}
+                            active={route().current('project.index')}
+                        >
+                            Projects
+                        </NavLink>
+                    
+                    
+                        <NavLink
+                            href={route('task.index')}
+                            active={route().current('task.index')}
+                        >
+                            All Tasks
+                        </NavLink>
+                    
+                    
+                        <NavLink
+                            href={route('user.index')}
+                            active={route().current('user.index')}
+                        >
+                            User
+                        </NavLink>
                             </div>
                         </div>
 
@@ -135,28 +157,7 @@ export default function AuthenticatedLayout({ header, children }) {
                             Dashboard
                         </ResponsiveNavLink>
                         
-                        <ResponsiveNavLink
-                            href={route('project.index')}
-                            active={route().current('project.index')}
-                        >
-                            Projects
-                        </ResponsiveNavLink>
-                    
-                    
-                        <ResponsiveNavLink
-                            href={route('task.index')}
-                            active={route().current('task.index')}
-                        >
-                            All Tasks
-                        </ResponsiveNavLink>
-                    
-                    
-                        <ResponsiveNavLink
-                            href={route('user.index')}
-                            active={route().current('user.index')}
-                        >
-                            User
-                        </ResponsiveNavLink>
+                        
                     
                     </div>
                     
