@@ -39,9 +39,9 @@ export default function Index({auth, tasks, queryParams = null}) {
     }
     return (
         <AuthenticatedLayout user={auth.user} 
-        header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Projects</h2>}
+        header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Tasks</h2>}
         >
-            <Head title="Projects"/>
+            <Head title="Tasks"/>
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
@@ -125,7 +125,7 @@ export default function Index({auth, tasks, queryParams = null}) {
                                         <th className="px-3 py-3"></th>
                                         <th className="px-3 py-3"></th>
                                         <th className="px-3 py-3">
-                                            <TextInput className="w-full" placeholder="Project Name"
+                                            <TextInput className="w-full" placeholder="Task Name"
                                             defaultValue={queryParams.name}
                                             onBlur={(e) => selectedFieldChanged('name', e.target.value)}
                                             onKeyPress={e => onKeyPress('name',e)}
