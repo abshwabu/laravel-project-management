@@ -1,3 +1,4 @@
+import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/constants";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 
@@ -11,8 +12,64 @@ export default function Show({auth, project}) {
             <div className="py-12">
                     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                         <div className="overflow-hidden bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
+                        <div>
+                                    <img src={project.data.image_path} alt="" className="w-full h-64 object-cover" />
+                                </div>
                             <div className="p-6 text-gray-900 dark:text-gray-100">
-                                Show
+                                
+                                <div className="grid gap-1 grid-cols-2 mt-2">
+                                    <div>
+                                        <div className="mt-4">
+                                        <label className="font-bold text-lg">ID</label>
+                                        <p>{project.data.id}</p>
+                                        </div>
+                                        <div className="mt-4">
+                                        <label className="font-bold text-lg">Name</label>
+                                        <p>{project.data.name}</p>
+                                        </div>
+                                        <div className="mt-4">
+                                            <label className="font-bold text-lg">Status</label>
+                                            <p className="mt-1">
+                                            <span
+                                                className={
+                                                "px-2 py-1 rounded text-white " +
+                                                PROJECT_STATUS_CLASS_MAP[project.data.status]
+                                                }
+                                            >
+                                                {PROJECT_STATUS_TEXT_MAP[project.data.status]}
+                                            </span>
+                                            </p>
+                                        </div>
+                                        <div className="mt-4">
+                                            <label className="font-bold text-lg">Created By</label>
+                                            <p>{project.data.createdBy.name}</p>
+                                        </div>
+                                        <div className="mt-4">
+                                            <label className="font-bold text-lg">Updated by</label>
+                                            <p>{project.data.updatedBy.name}</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="mt-4">
+                                        <label className="font-bold text-lg">Created At</label>
+                                        <p>{project.data.created_at}</p>
+                                        </div>
+                                        <div className="mt-4">
+                                        <label className="font-bold text-lg">Due Date</label>
+                                        <p>{project.data.due_date}</p>
+                                        </div>
+                                        
+                                        <div className="mt-4">
+                                        <label className="font-bold text-lg">Updated by</label>
+                                        <p>{project.data.updatedBy.name}</p>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div className="mt-4">
+                                        <label className="font-bold text-lg">Description</label>
+                                        <p>{project.data.description}</p>
+                                        </div>
                             </div>
                         </div>
                     </div>
