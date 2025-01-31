@@ -1,42 +1,16 @@
-import Pagination from "@/Components/Pagination";
-import SelectInput from "@/Components/SelectInput";
-import TextInput from "@/Components/TextInput";
-import { TASK_STATUS_TEXT_MAP, TASK_STATUS_CLASS_MAP} from "@/constants";
+
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, router } from "@inertiajs/react";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
+import { Head } from "@inertiajs/react";
+import TasksTable from "./TasksTable";
 
 export default function Index({auth, tasks, queryParams = null}) {
 
     queryParams = queryParams || {};
-    const selectedFieldChanged = (field, value) => {
+    
 
-        if (value) {
-            queryParams[field] = value;
-        } else {
-            delete queryParams[field];
-        }
+    
 
-        router.get(route('task.index', queryParams));
-    }
-
-    const onKeyPress = (field, e) => {
-        if (e.key === 'Enter') {
-            selectedFieldChanged(field, e.target.value);
-        }
-        return;
-    }
-
-    const sortChange = (field) => {
-        if (queryParams.sort_field === field) {
-            queryParams.sort_direction = queryParams.sort_direction === 'asc' ? 'desc' : 'asc';
-        }else{
-            queryParams.sort_field = field;
-            queryParams.sort_direction= 'asc';
-        }
-        
-        router.get(route('task.index', queryParams));
-    }
+    
     return (
         <AuthenticatedLayout user={auth.user} 
         header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Tasks</h2>}
@@ -46,135 +20,7 @@ export default function Index({auth, tasks, queryParams = null}) {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
-                            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
-                                    <tr className="text-nowrap">
-                                        <th onClick={(e) => sortChange('id')} className="px-3 py-3 flex items-center justify-between gap-1 cursor-pointer">
-                                            <div className="px-3 py-3 flex items-center justify-between gap-1 cursor-pointer">
-                                            ID 
-                                            <div>
-                                            <ChevronUpIcon  className={
-                                                queryParams.sort_field === 'id' && queryParams.sort_direction === 'asc' ? 'w-4' : 'w-0'
-                                            }/> 
-                                            <ChevronDownIcon className={
-                                                queryParams.sort_field == 'id' && queryParams.sort_direction === 'desc' ? 'w-4' :"w-0"
-                                            }/>
-                                            </div>
-                                            </div>
-                                            
-                                             </th>
-                                        <th className="px-3 py-3">Image</th>
-                                        <th onClick={(e) => sortChange('name')}>
-                                        <div className="px-3 py-3 flex items-center justify-between gap-1 cursor-pointer">
-                                            Name
-                                        <div>
-                                            <ChevronUpIcon  className={
-                                                queryParams.sort_field === 'name' && queryParams.sort_direction === 'asc' ? 'w-4' : 'w-0'
-                                            }/> 
-                                            <ChevronDownIcon className={
-                                                queryParams.sort_field == 'name' && queryParams.sort_direction === 'desc' ? 'w-4' :"w-0"
-                                            }/>
-                                        </div>
-                                        </div>
-                                        </th>
-                                        <th onClick={(e) => sortChange('status')}>
-                                        <div className="px-3 py-3 flex items-center justify-between gap-1 cursor-pointer">
-                                            Status
-                                        <div>
-                                            <ChevronUpIcon  className={
-                                                queryParams.sort_field === 'status' && queryParams.sort_direction === 'asc' ? 'w-4' : 'w-0'
-                                            }/> 
-                                            <ChevronDownIcon className={
-                                                queryParams.sort_field == 'status' && queryParams.sort_direction === 'desc' ? 'w-4' :"w-0"
-                                            }/>
-                                            </div>
-                                        </div>
-                                        </th>
-                                        <th onClick={(e) => sortChange('created_at')} className="px-3 py-3">
-                                        <div className="px-3 py-3 flex items-center justify-between gap-1 cursor-pointer">
-                                            Create Date
-                                        <div>
-                                            <ChevronUpIcon  className={
-                                                queryParams.sort_field === 'created_at' && queryParams.sort_direction === 'asc' ? 'w-4' : 'w-0'
-                                            }/> 
-                                            <ChevronDownIcon className={
-                                                queryParams.sort_field == 'created_at' && queryParams.sort_direction === 'desc' ? 'w-4' :"w-0"
-                                            }/>
-                                            </div>
-                                            </div>
-                                        </th>
-                                        <th onClick={(e) => sortChange('due_date')} className="px-3 py-3">
-                                        <div className="px-3 py-3 flex items-center justify-between gap-1 cursor-pointer">
-                                            Due Date
-                                        <div>
-                                            <ChevronUpIcon  className={
-                                                queryParams.sort_field === 'due_date' && queryParams.sort_direction === 'asc' ? 'w-4' : 'w-0'
-                                            }/> 
-                                            <ChevronDownIcon className={
-                                                queryParams.sort_field == 'due_date' && queryParams.sort_direction === 'desc' ? 'w-4' :"w-0"
-                                            }/>
-                                            </div>
-                                            </div>
-                                        </th>
-                                        <th className="px-3 py-3">Created By</th>
-                                        <th className="px-3 py-3 text-right">Actions</th>
-                                    </tr>
-                                </thead>
-                                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
-                                    <tr className="text-nowrap">
-                                        <th className="px-3 py-3"></th>
-                                        <th className="px-3 py-3"></th>
-                                        <th className="px-3 py-3">
-                                            <TextInput className="w-full" placeholder="Task Name"
-                                            defaultValue={queryParams.name}
-                                            onBlur={(e) => selectedFieldChanged('name', e.target.value)}
-                                            onKeyPress={e => onKeyPress('name',e)}
-                                            />
-                                        </th>
-                                        <th className="px-3 py-3">
-                                            <SelectInput className="w-full" onChange={(e) => selectedFieldChanged('status', e.target.value)} defaultValue={queryParams.status}>
-                                                <option value="">Select Status</option>
-                                                {Object.keys(TASK_STATUS_TEXT_MAP).map((status) => (
-                                                    <option key={status} value={status}>{TASK_STATUS_TEXT_MAP[status]}</option>
-                                                ))}
-                                            </SelectInput>
-                                        </th>
-                                        <th className="px-3 py-3"></th>
-                                        <th className="px-3 py-3"></th>
-                                        <th className="px-3 py-3"></th>
-                                        <th className="px-3 py-3 text-right"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {tasks.data.map((task) => (
-                                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={task.id}>
-                                        <td className="px-3 py-3 text-nowrap">{task.id}</td>
-                                        <td className="px-3 py-3 text-nowrap">
-                                            <img src={task.image_path} alt="" />
-                                        </td>
-                                        <td className="px-3 py-3 text-nowrap">{task.name}</td>
-                                        <td className="px-3 py-3 text-nowrap">
-                                            <span
-                                                className={
-                                                "px-2 py-1 rounded text-white " +
-                                                TASK_STATUS_CLASS_MAP[task.status]
-                                                }
-                                            >
-                                                {TASK_STATUS_TEXT_MAP[task.status]}
-                                            </span>
-                                        </td>
-                                        <td className="px-3 py-3 text-nowrap">{task.created_at}</td>
-                                        <td className="px-3 py-3 text-nowrap">{task.due_date}</td>
-                                        <td className="px-3 py-3 text-nowrap">{task.createdBy.name}</td>
-                                        <td className="px-3 py-3 text-nowrap text-right">
-                                            <Link href={route('task.edit', task.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1">Edit</Link>
-                                            <Link href={route('task.destroy', task.id)} className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1">Delete</Link>
-                                        </td>
-                                    </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                            <Pagination links={tasks.meta.links} />
+                            <TasksTable tasks={tasks} queryParams={queryParams} />
                         </div>
                     </div>
                 </div>
