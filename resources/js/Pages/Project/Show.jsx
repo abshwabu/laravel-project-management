@@ -1,8 +1,9 @@
 import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/constants";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
+import TasksTable from "../Task/TasksTable";
 
-export default function Show({auth, project}) {
+export default function Show({auth, project, tasks, queryParams=null}) {
     return (
         <AuthenticatedLayout
         user={auth.user}
@@ -79,7 +80,7 @@ export default function Show({auth, project}) {
                         <div className="overflow-hidden bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                             <div className="p-6 text-gray-900 dark:text-gray-100">
                                 
-                                Table
+                                <TasksTable tasks={tasks} queryParams={queryParams} />
                             </div>
                         </div>
                     </div>

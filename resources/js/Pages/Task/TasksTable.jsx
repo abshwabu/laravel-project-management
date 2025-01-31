@@ -12,6 +12,7 @@ export default function TasksTable({
   hideProjectColumn = false,
 }) {
   queryParams = queryParams || {};
+  queryParams = queryParams || {};
   const searchFieldChanged = (name, value) => {
     if (value) {
       queryParams[name] = value;
