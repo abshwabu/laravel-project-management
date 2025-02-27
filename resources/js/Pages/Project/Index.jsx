@@ -37,6 +37,12 @@ export default function Index({auth, projects, queryParams = null, success}) {
         
         router.get(route('project.index', queryParams));
     }
+    const deleteProjuct = (e) => {
+        if (!confirm('Are you sure you want to delete this project?')) {
+            return;
+        }
+        router.delete(route('project.destroy', e.id))
+    }
     return (
         <AuthenticatedLayout user={auth.user} 
         header={
@@ -185,7 +191,7 @@ export default function Index({auth, projects, queryParams = null, success}) {
                                         <td className="px-3 py-3 text-nowrap">{project.createdBy.name}</td>
                                         <td className="px-3 py-3 text-nowrap text-right">
                                             <Link href={route('project.edit', project.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1">Edit</Link>
-                                            <Link href={route('project.destroy', project.id)} className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1">Delete</Link>
+                                            <button onClick={(e) => deleteProjuct(project)} className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1">Delete</button>
                                         </td>
                                     </tr>
                                     ))}
