@@ -9,12 +9,9 @@ import { Head, Link, useForm } from "@inertiajs/react";
 export default function Create({auth, user}) {
    const {data, setData, post, errors, reset} = useForm({
         name: user.data.name || "",
-        description: user.data.description || "",
-        image: '',
-        due_date: user.data.due_date  || "",
-        status: user.data.status || "",
-        created_by: auth.user.id,
-        updated_by: auth.user.id,
+        email: user.data.email || "",
+        password:  "",
+        password_confirmation:  "",
         _method: 'PUT'
     })
     const onSubmit = (e) => {
@@ -37,38 +34,25 @@ export default function Create({auth, user}) {
                     <div className="overflow-hidden bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                         
                             <form onSubmit={onSubmit} className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                                {user.data.image_path && <div className="mb-4">
-                                    <img src={user.data.image_path} alt={user.data.name} className="w-64" />
-                                    </div>}
-                                <div>
-                                    <InputLabel htmlFor="user_image_path" value="User Image" className="text-white" />
-                                    <TextInput id="user_image_path" type="file" name="image " className="mt-1 block w-full text-white bg-gray-900" onChange={(e) => setData('image', e.target.files[0])} />
-                                    <InputError error={errors.image} className="text-red-500 mt-2" />
-                                </div>
                                 <div>
                                     <InputLabel htmlFor="user_name" value="User Name" className="text-white" />
                                     <TextInput id="user_name" type="text" name="name" className="mt-1 block w-full text-white bg-gray-900" isFocused={true} value={data.name} onChange={(e) => setData('name', e.target.value)} />
-                                    <InputError error={errors.name} className="text-red-500 mt-2" />
+                                    <InputError message={errors.name} className="text-red-500 mt-2" />
                                 </div>
                                 <div>
-                                    <InputLabel htmlFor="user_description" value="User Description" className="text-white" />
-                                    <TextAreaInput id="user_description" name="description" className="mt-1 block w-full text-white bg-gray-900" value={data.description} onChange={(e) => setData('description', e.target.value)} />
-                                    <InputError error={errors.description} className="text-red-500 mt-2" />
+                                    <InputLabel htmlFor="user_email" value="User Email" className="text-white" />
+                                    <TextInput id="user_email" type="text" name="email" className="mt-1 block w-full text-white bg-gray-900" value={data.email} onChange={(e) => setData('email', e.target.value)} />
+                                    <InputError message={errors.email} className="text-red-500 mt-2" />
                                 </div>
                                 <div>
-                                    <InputLabel htmlFor="user_due_date" value="Due Date" className="text-white" />
-                                    <TextInput id="user_due_date" type="date" name="due_date" className="mt-1 block w-full text-white bg-gray-900" value={data.due_date} onChange={(e) => setData('due_date', e.target.value)} />
-                                    <InputError error={errors.due_date} className="text-red-500 mt-2" />
+                                    <InputLabel htmlFor="user_password" value="Password" className="text-white" />
+                                    <TextInput id="user_password" type="password" name="password" className="mt-1 block w-full text-white bg-gray-900" value={data.password} onChange={(e) => setData('password', e.target.value)} />
+                                    <InputError message={errors.password} className="text-red-500 mt-2" />
                                 </div>
                                 <div>
-                                    <InputLabel htmlFor="user_status" value="Status" className="text-white" />
-                                    <SelectInput id="user_status" name="status" className="mt-1 block w-full text-white bg-gray-900" value={data.status} onChange={(e) => setData('status', e.target.value)}>
-                                        <option value="">Select Status</option>
-                                        <option value="pending">Pending</option>
-                                        <option value="in_progress">In Progress</option>
-                                        <option value="completed">Completed</option>
-                                    </SelectInput>
-                                    <InputError error={errors.status} className="text-red-500 mt-2" />
+                                    <InputLabel htmlFor="user_password_confirmation" value="Confirm Password" className="text-white" />
+                                    <TextInput id="user_password_confirmation" type="password" name="password_confirmation" className="mt-1 block w-full text-white bg-gray-900" value={data.password_confirmation} onChange={(e) => setData('password_confirmation', e.target.value)} />
+                                    <InputError message={errors.password_confirmation} className="text-red-500 mt-2" />
                                 </div>
                                 <div className="text-right mt-4">
                                     <Link href={route('user.index')} className="px-3 py-1 text-gray-800 bg-gray-100 border rounded shadow transition-all hover:bg-gray-200 mr-2 text-sm h-8">
