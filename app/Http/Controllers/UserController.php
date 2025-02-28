@@ -50,6 +50,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
+        $data['email_verified_at'] = time();
         $data['password'] = bcrypt($data['password']);
         User::create($data);
         return redirect()->route('user.index')->with('success', 'User created.');
@@ -93,6 +94,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('user.index')->with('success', 'User deleted.');
     }
 }
