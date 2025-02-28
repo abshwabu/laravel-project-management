@@ -31,7 +31,7 @@ class TaskResource extends JsonResource
             'assinedTo' =>$this->assinedTo? new UserResource($this->assinedTo):null,
             'createdBy' => new UserResource($this->createdBy),
             'updatedBy' => new UserResource($this->updatedBy),
-            'image_path' => $this->image_path,
+            'image_path' => $this->image_path ? asset('storage/' . $this->image_path) : null,   
         ];
     }
 }
