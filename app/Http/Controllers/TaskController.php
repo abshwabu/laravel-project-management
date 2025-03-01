@@ -90,8 +90,13 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        return inertia("Task/Edit", [
+        $projects = Project::query()->orderBy('name')->get();
+        $users = User::query()->orderBy('name')->get();
+
+        return inertia("Task/EditPage", [
             "task" => new TaskResource($task),
+            "users"=>  UserResource::collection($users),
+            "projects" =>  ProjectResource::collection($projects)
         ]);
     }
 
@@ -101,12 +106,14 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, Task $task)
     {
         $data = $request->validated();
+        $image = $data['image'] ?? null;
         if ($image) {
             if ($task->image_path) {
                 Storage::disk('public')->deleteDirectory(dirname($task->image_path));
             }
             $data['image_path'] = $image->store('task/' . Str::random(), 'public');
         }
+        $data['updated_by'] = Auth::id();
         $task->update($data);
         return redirect()->route("task.index")->with("success", "Task updated.");
     }

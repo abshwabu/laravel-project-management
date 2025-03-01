@@ -92,10 +92,11 @@ export default function Create({auth, projects, users}) {
                                 </div>
                                 
                                 <div>
-                                    <InputLabel htmlFor="task_assigned_to" value="Status" className="text-white" />
+                                    <InputLabel htmlFor="task_assigned_to" value="Assigned To" className="text-white" />
                                     <SelectInput id="task_assigned_to" name="assigned_to" className="mt-1 block w-full text-white bg-gray-900" value={data.assigned_to} onChange={(e) => setData('assigned_to', e.target.value)}>
                                         <option value="">Select User</option>
                                         {users.data.map((user) => (
+                                            
                                             <option value={user.id} key={user.id}>{user.name}</option>
                                         ))}
                                     </SelectInput>
