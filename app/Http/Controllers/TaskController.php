@@ -129,4 +129,19 @@ class TaskController extends Controller
         }
         return redirect()->route("task.index")->with("success", "Task deleted.");
     }
+
+    public function myTask()
+    {
+        $tasks = Task::query()
+            ->where('assigned_to', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->onEachSide(1);
+
+        return inertia("Task/MyTask", [
+            "tasks" => TaskResource::collection($tasks),
+            'queryParams' => request()->query() ?: null,
+            'success' => session('success'),
+        ]);
+    }
 }
